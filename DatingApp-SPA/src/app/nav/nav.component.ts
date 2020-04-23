@@ -1,5 +1,7 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/Auth.service';
+import { AlertifyService } from '../_services/Alertify.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,7 +11,7 @@ import { AuthService } from '../_services/Auth.service';
 export class NavComponent implements OnInit {
   model: any = {};
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyService) { }
 
   ngOnInit() {
   }
@@ -17,21 +19,20 @@ export class NavComponent implements OnInit {
   login()
   {
     this.authService.login(this.model).subscribe(next => {
-      console.log('Successful...');
+      this.alertify.success('Successful...');
     }, error => {
-      console.log('Error Failed Login...');
+      this.alertify.error('Error Failed Login...');
     });
   }
 
   loggedIn()
   {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.authService.loggedIn();
   }
 
   logout()
   {
     localStorage.removeItem('token');
-    console.log('logged out');
+    this.alertify.message('logged out');
   }
 }
