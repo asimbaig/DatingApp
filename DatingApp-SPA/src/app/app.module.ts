@@ -23,6 +23,10 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import {JwtModule} from '@auth0/angular-jwt';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
+import {NgxGalleryModule} from '@kolkov/ngx-gallery';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberEditResolver } from './_resolvers/member-edit.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
 export function tokenGetter()
 {
@@ -40,6 +44,7 @@ export function tokenGetter()
       MemberListComponent,
       MemberDetailsComponent,
       MemberCardComponent,
+      MemberEditComponent,
       ListsComponent,
       MessagesComponent
    ],
@@ -51,6 +56,7 @@ export function tokenGetter()
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
+      NgxGalleryModule,
       JwtModule.forRoot({
         config:
         {
@@ -64,7 +70,9 @@ export function tokenGetter()
       AuthService,
       ErrorInterceptorProvider,
       MemberDetailResolver,
-      MemberListResolver
+      MemberListResolver,
+      MemberEditResolver,
+      PreventUnsavedChanges
    ],
    bootstrap: [
       AppComponent
